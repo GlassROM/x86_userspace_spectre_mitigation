@@ -1,0 +1,10 @@
+# Ignore clang-specific output
+libx86_return_thunk_clang.a
+libx86_return_thunk_clang.so
+
+# Ignore gcc-specific output
+libx86_return_thunk_gcc.a
+libx86_return_thunk_gcc.so
+
+# Ignore miscellaneous object files
+return_thunk.lib.o

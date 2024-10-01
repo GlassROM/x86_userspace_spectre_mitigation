@@ -1,0 +1,19 @@
+FROM ghcr.io/glassrom/os-image-updater:master AS builder
+
+RUN pacman-key --init && pacman-key --populate archlinux
+
+RUN set -x \
+    && pacman -Syyuu --noconfirm base-devel git
+
+#LABEL maintainer=""
+
+RUN useradd -m user \
+    && echo 'user ALL=(ALL) NOPASSWD:ALL' | tee -a /etc/sudoers
+COPY --chown=user:user . /home/user/rethunk_lib
+
+USER user
+
+WORKDIR /home/user/rethunk_lib
+
+RUN makepkg -sf --noconfirm
+RUN rm *debug* && mv *.tar.zst rethunk.tar.zst
