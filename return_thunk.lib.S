@@ -2,19 +2,15 @@
 .global __x86_return_thunk
 .type __x86_return_thunk, @function
 __x86_return_thunk:
-    endbr64
     call .spec_end
 .spec_start:
-    endbr64
     lfence
     jmp .spec_start
 .spec_end:
-    endbr64
     lea 0x8(%rsp),%rsp
     jmp .end
     int3
 .end:
-    endbr64
     ret
     int3
 
@@ -23,27 +19,21 @@ __x86_return_thunk:
     .global __x86_indirect_thunk_\cpu_reg
     .type __x86_indirect_thunk_\cpu_reg, @function
 __x86_indirect_thunk_\cpu_reg:
-        endbr64
         jmp .spec_call_\cpu_reg
 .spec_safe_\cpu_reg:
-        endbr64
         call .safe_call_\cpu_reg
 .spec_start_\cpu_reg:
-        endbr64
         lfence
         jmp .spec_start_\cpu_reg
 .safe_call_\cpu_reg:
-        endbr64
         add $0x8, %rsp # Added by .spec_call_\cpu_reg
         mov %\cpu_reg, (%rsp)
         jmp .end_\cpu_reg
         int3
 .end_\cpu_reg:
-        endbr64
         ret
         int3
 .spec_call_\cpu_reg:
-        endbr64
         call .spec_safe_\cpu_reg
 .endm
 
@@ -52,27 +42,21 @@ __x86_indirect_thunk_\cpu_reg:
     .global __x86_indirect_thunk_\name
     .type __x86_indirect_thunk_\name, @function
 __x86_indirect_thunk_\name:
-        endbr64
         jmp .spec_call_\name
 .spec_safe_\name:
-        endbr64
         call .safe_call_\name
 .spec_start_\name:
-        endbr64
         lfence
         jmp .spec_start_\name
 .safe_call_\name:
-        endbr64
         add $0x8, %rsp # Added by .spec_call_\name
         mov %rax, (%rsp)
         jmp .end_\name
         int3
 .end_\name:
-        endbr64
         ret
         int3
 .spec_call_\name:
-        endbr64
         call .spec_safe_\name
 .endm
 
