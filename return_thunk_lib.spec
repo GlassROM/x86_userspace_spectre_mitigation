@@ -3,7 +3,7 @@ Version:        1.0
 Release:        1%{?dist}
 Summary:        Library that implements x86 return thunks for speculative execution mitigation
 
-License:        MIT
+License:        LGPLv2.1
 URL:            (no URL given)
 Source0:        build.sh
 Source1:        return_thunk_lib.S
